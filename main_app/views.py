@@ -34,3 +34,24 @@ class MedicationList(TemplateView):
         context["medications"] = medications
         return context
         
+
+class Database:
+    def __init__(self, name, uses, how_it_works, side_effects, counseling_points):
+        self.name = name
+        self.uses = uses
+        self.how_it_works = how_it_works
+        self.side_effects = side_effects
+        self.counseling_points = counseling_points
+
+databases = [
+    Database("metformin", "type 2 diabetes, weight loss", "This medication helps make your cells more sensitive to insulin", "nausea, vomiting, diarrhea", "Take with food to help prevent gastrointestinal side effects. Do not crush extended-release tablets. Talk to your doctor if you are experiencing continued gastrointestinal side effects."),
+]
+
+class PharmacyDatabase(TemplateView):
+    template_name = "pharmacy_database.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["databases"] = databases
+        return context
+        
