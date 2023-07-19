@@ -19,7 +19,7 @@
   <a class="button is-dark is-fullwidth" href="{% url 'medication_create' %}" style="background-color: #78e08f; color: #fff;">Add medication</a>
 </div>
 <div class="gallery">
-  {% for medication in medications %}
+  {% for medication in medications.objects.all %}
   <a href="{% url 'medication_detail' medication.pk %}">
     <div class="card">
       <div class="card-image">
