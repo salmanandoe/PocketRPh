@@ -1,18 +1,30 @@
 {% extends 'base.html' %}
-
-{% comment %} for head title tags and helping us with SEO {% endcomment %}
-{% block title %}Artist{% endblock  %}
-
 {% block content %}
 
-<h1 class="title pt-5">My Medications</h1>
+<h1 class="title pt-5">{{header}}</h1>
+
+<form class="mb-5" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="text" name="name" placeholder="name" />
+    </div>
+    <div class="control">
+      <input class="button is-success" type="submit" value="Search" style="background-color: #7dd0e2; color: #fff;" />
+    </div>
+  </div>
+  <a class="button is-dark" href="{% url 'medication_list' %}" style="background-color: #fa9c99; color: #fff;">Clear Search</a>
+</form>
+<hr>
+<div class="creatmed">
+  <a class="button is-dark is-fullwidth" href="{% url 'medication_create' %}" style="background-color: #78e08f; color: #fff;">Add medication</a>
+</div>
 <div class="gallery">
   {% for medication in medications %}
-  <a href="">
+  <a href="{% url 'medication_detail' medication.pk %}">
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
-          <img src="{{medication.image}}" alt="{{medication.name}}" />
+          <img src="{{medication.img}}" alt="{{medication.name}}" />
         </figure>
       </div>
       <div class="card-header">

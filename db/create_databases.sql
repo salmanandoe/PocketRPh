@@ -1,0 +1,3 @@
+INSERT INTO main_app_database(generic_name, brand_name, uses, how_it_works, side_effects, counseling_points)
+  VALUES
+    ('metformin', 'Glucophage, Riomet, Fortamet, and Glumetza', 'type 2 diabetes, weight loss', 'This medication helps make your cells more sensitive to insulin', 'nausea, vomiting, diarrhea', 'Take with food to help prevent gastrointestinal side effects. Do not crush extended-release tablets. Talk to your doctor if you are experiencing continued gastrointestinal side effects.');

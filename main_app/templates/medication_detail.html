@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="detail__img">
+    <img src="{{medication.img}}" alt="{{medication.name}}" />
+</div>
+<div class="detail__container">
+    <div class="buttons">
+        <a href="{% url 'medication_update' medication.pk %}" class="button is-info"> Updates
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+        </a>
+        <a href="{% url 'medication_delete' medication.pk %}" class="button is-danger">Delete
+            <span class="icon">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

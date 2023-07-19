@@ -1,7 +1,13 @@
+from django.urls import reverse
 from django.shortcuts import render
 from django.views import View 
 from django.http import HttpResponse 
 from django.views.generic.base import TemplateView
+from .models import Medication
+from .models import Database
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView
+
 
 class Home(TemplateView):
     template_name = "home.html"
@@ -9,21 +15,6 @@ class Home(TemplateView):
 
 class Profile(TemplateView):
     template_name = "profile.html"
-    
-
-class Medication:
-    def __init__(self, image, name, strength, dose, route, frequency, indication):
-        self.image = image
-        self.name = name
-        self.strength = strength
-        self.dose = dose
-        self.route = route
-        self.frequency = frequency
-        self.indication = indication
-
-medications = [
-    Medication("https://img.freepik.com/free-vector/medicine-capsule-pill-icon-vector_53876-166682.jpg?w=2000", "Metformin", "500 mg", "1000 mg", "by mouth", "twice daily", "diabetes"),
-]
 
 
 class MedicationList(TemplateView):
@@ -31,28 +22,58 @@ class MedicationList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["medications"] = medications
-        return context
-        
+        name = self.request.GET.get("name")
+        if name != None:
+            context["medications"] = Medication.objects.filter(name__icontains=name)
+            context["header"] = f"Searching for {name}"
+        else:
+            context["medications"] = Medication.objects.all()
+            context["header"] = "My medications"
+        return context  
 
-class Database:
-    def __init__(self, generic_name, brand_name, uses, how_it_works, side_effects, counseling_points):
-        self.generic_name = generic_name
-        self.brand_name = brand_name
-        self.uses = uses
-        self.how_it_works = how_it_works
-        self.side_effects = side_effects
-        self.counseling_points = counseling_points
-
-databases = [
-    Database("metformin", "Glucophage, Riomet, Fortamet, and Glumetza", "type 2 diabetes, weight loss", "This medication helps make your cells more sensitive to insulin", "nausea, vomiting, diarrhea", "Take with food to help prevent gastrointestinal side effects. Do not crush extended-release tablets. Talk to your doctor if you are experiencing continued gastrointestinal side effects."),
-]
 
 class PharmacyDatabase(TemplateView):
     template_name = "pharmacy_database.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["databases"] = databases
+        generic_name = self.request.GET.get("generic_name")
+        if generic_name != None:
+            context["database"] = Database.objects.filter(generic_name__icontains=generic_name)
+            context["header"] = f"Searching for {generic_name}"
+        else: 
+            context["database"] = Database.objects.all()
+            context["header"] = "Search the pharmacy database"
         return context
         
+
+class MedicationCreate(CreateView):
+    model = Medication
+    fields = ['img', 'name', 'strength', 'dose', 'route', 'frequency', 'indication']
+    template_name = "medication_create.html"
+    
+    def get_success_url(self):
+        return reverse('medication_detail', kwargs={'pk': self.object.pk})
+    
+
+class MedicationDetail(DetailView):
+    model = Medication
+    template_name = "medication_detail.html"
+
+
+class MedicationUpdate(UpdateView):
+    model = Medication
+    fields = ['img', 'name', 'strength', 'dose', 'route', 'frequency', 'indication']
+    template_name = "medication_update.html"
+    
+    def get_success_url(self):
+        return reverse('medication_detail', kwargs={'pk': self.object.pk})
+    
+
+class MedicationDelete(DeleteView):
+    model = Medication
+    template_name = "medication_delete_confirmation.html"
+    success_url = "/medications/"
+
+    
+
