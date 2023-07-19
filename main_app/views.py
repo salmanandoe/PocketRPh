@@ -36,15 +36,16 @@ class MedicationList(TemplateView):
         
 
 class Database:
-    def __init__(self, name, uses, how_it_works, side_effects, counseling_points):
-        self.name = name
+    def __init__(self, generic_name, brand_name, uses, how_it_works, side_effects, counseling_points):
+        self.generic_name = generic_name
+        self.brand_name = brand_name
         self.uses = uses
         self.how_it_works = how_it_works
         self.side_effects = side_effects
         self.counseling_points = counseling_points
 
 databases = [
-    Database("metformin", "type 2 diabetes, weight loss", "This medication helps make your cells more sensitive to insulin", "nausea, vomiting, diarrhea", "Take with food to help prevent gastrointestinal side effects. Do not crush extended-release tablets. Talk to your doctor if you are experiencing continued gastrointestinal side effects."),
+    Database("metformin", "Glucophage, Riomet, Fortamet, and Glumetza", "type 2 diabetes, weight loss", "This medication helps make your cells more sensitive to insulin", "nausea, vomiting, diarrhea", "Take with food to help prevent gastrointestinal side effects. Do not crush extended-release tablets. Talk to your doctor if you are experiencing continued gastrointestinal side effects."),
 ]
 
 class PharmacyDatabase(TemplateView):

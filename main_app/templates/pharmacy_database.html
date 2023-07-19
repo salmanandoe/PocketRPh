@@ -5,18 +5,14 @@
 
 {% block content %}
 
-<h1 class="title pt-5">Search for a Medication</h1>
-<div class="gallery">
-  {% for medication in medications %}
+<h1 class="title pt-5">Search for a medication</h1>
+<div class="container">
+  {% for database in databases %}
   <a href="">
     <div class="card">
-      <div class="card-image">
-        <figure class="image is-square">
-          <img src="{{database.image}}" alt="{{database.name}}" />
-        </figure>
-      </div>
       <div class="card-header">
-        <p class="card-header-title">{{database.name}}</p>
+        <p class="card-header-title">Brand name: {{database.brand_name}} </br> Generic name: {{database.generic_name}} 
+        </p>
       </div>
     </div>
   </a>
